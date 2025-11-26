@@ -7,7 +7,7 @@ export default define.page(async function (ctx) {
   const data = await fetchIssue(+ctx.params.id);
   return (
     <div class="min-h-screen bg-gray-50 py-12">
-      <div class="max-w-3xl mx-auto px-6">
+      <div class="max-w-4xl mx-auto px-6">
         {/* Back button */}
         <a
           href=".."
@@ -34,7 +34,7 @@ export default define.page(async function (ctx) {
         {/* Article content */}
         <article class="bg-white rounded-lg shadow-sm p-8 mb-12">
           <div
-            class="markdown-body prose prose-gray max-w-none"
+            class="markdown-body"
             dangerouslySetInnerHTML={{ __html: data.bodyHTML }}
           />
         </article>
@@ -65,7 +65,7 @@ export default define.page(async function (ctx) {
                       </span>
                     </div>
                     <div
-                      class="comment-body markdown-body prose prose-sm max-w-none text-gray-700"
+                      class="markdown-body"
                       dangerouslySetInnerHTML={{ __html: comment.bodyHTML }}
                     />
                   </div>
