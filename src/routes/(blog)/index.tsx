@@ -1,11 +1,24 @@
 import { fetchIssues, fetchUserInfo } from "./(_assets)/service.ts";
 import { define } from "../../utils/state.ts";
 
-export default define.page(async function (_ctx) {
-  const [issues, userInfo] = await Promise.all([
+export default define.page(async function (ctx) {
+  const url = new URL(ctx.url);
+  const page = Math.max(1, parseInt(url.searchParams.get("page") || "1"));
+  const perPage = 10;
+
+  const [allIssues, userInfo] = await Promise.all([
     fetchIssues(),
     fetchUserInfo(),
   ]);
+
+  // 分页逻辑
+  const totalPages = Math.ceil(allIssues.length / perPage);
+  const currentPage = Math.min(page, totalPages);
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const issues = allIssues.slice(startIndex, endIndex);
+  const hasNextPage = currentPage < totalPages;
+  const hasPrevPage = currentPage > 1;
 
   return (
     <div class="min-h-screen bg-gray-50">
@@ -78,6 +91,29 @@ export default define.page(async function (_ctx) {
               </div>
             </a>
           ))}
+        </div>
+
+        {/* Pagination */}
+        <div class="mt-12 flex justify-center space-x-4">
+          {hasPrevPage && (
+            <a
+              href={`?page=${currentPage - 1}`}
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+            >
+              Previous
+            </a>
+          )}
+          <span class="px-4 py-2 bg-gray-100 text-gray-600 rounded">
+            Page {currentPage} of {totalPages}
+          </span>
+          {hasNextPage && (
+            <a
+              href={`?page=${currentPage + 1}`}
+              class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+            >
+              Next
+            </a>
+          )}
         </div>
 
         {/* Footer */}

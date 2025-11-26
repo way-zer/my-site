@@ -17,6 +17,7 @@ export const CONFIG = {
 const token = Deno.env.get("GITHUB_TOKEN");
 
 //获取 issues 列表的函数
+// 新增：获取 issues 列表的函数
 export async function fetchIssues() {
   const gql = graphql.defaults({
     headers: {
