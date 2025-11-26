@@ -20,6 +20,9 @@
   ],
   "imports": {
     "@/": "./",
+    "@iconify/json": "npm:@iconify/json@^2.2.410",
+    "@iconify/tailwind4": "npm:@iconify/tailwind4@^1.1.1",
+    "@octokit/graphql": "npm:@octokit/graphql@^9.0.3",
     "fresh": "jsr:@fresh/core@^2.2.0",
     "preact": "npm:preact@^10.27.2",
     "@preact/signals": "npm:@preact/signals@^2.5.0",
